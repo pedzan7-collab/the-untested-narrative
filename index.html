@@ -1,0 +1,725 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Evidence-led writing on wrongful convictions, disputed allegations and failures of justice.">
+<meta property="og:title" content="The Untested Narrative">
+<meta property="og:description" content="Evidence. Due process. Accountability.">
+<meta property="og:image" content="media/cover.jpg">
+<link rel="icon" href="media/logo.png">
+<title>The Untested Narrative</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a case-file archive. Dark brand masthead, then a reading column (posts) or an index of numbered files with a side rail. */
+:root {
+  --bg: #F2F1ED;
+  --surface: #FBFAF7;
+  --ink: #17181A;
+  --muted: #5D5F63;
+  --rule: #D8D5CD;
+  --gold: #8C6D22;
+  --gold-soft: #E9E0C8;
+  --band: #121212;
+  --band-ink: #EFE8D8;
+  --band-gold: #C9A24A;
+  --danger: #A23B2A;
+  --font-display: "Cormorant Garamond", "Iowan Old Style", Georgia, serif;
+  --font-body: "Source Serif 4", "Iowan Old Style", Georgia, serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --measure: 40rem;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #141414; --surface: #1C1B19; --ink: #ECE6D8; --muted: #A39D90; --rule: #34322E;
+    --gold: #CFA94F; --gold-soft: #2C271B; --danger: #E07A66; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #141414; --surface: #1C1B19; --ink: #ECE6D8; --muted: #A39D90; --rule: #34322E;
+  --gold: #CFA94F; --gold-soft: #2C271B; --danger: #E07A66; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 1.0625rem; line-height: 1.65; -webkit-font-smoothing: antialiased; }
+a { color: inherit; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 3px; border-radius: 2px; }
+.wrap { max-width: 72rem; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+.label { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.label.gold { color: var(--gold); }
+
+/* Masthead */
+.masthead { background: var(--band); color: var(--band-ink); }
+.masthead .wrap { display: flex; align-items: center; gap: 1.25rem; padding-block: 1.6rem 1.3rem; }
+.masthead img { width: 64px; height: 64px; flex: none; }
+.brand { text-decoration: none; display: grid; gap: 0.15rem; min-width: 0; }
+.brand-name { font-family: var(--font-display); font-weight: 600; font-size: clamp(1.7rem, 4.5vw, 2.6rem); letter-spacing: 0.06em; line-height: 1.05; font-variant: small-caps; }
+.brand-tag { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--band-gold); display: flex; align-items: center; gap: 0.6rem; }
+.brand-tag::before { content: ""; width: 2.2rem; height: 1px; background: var(--band-gold); }
+.follow { margin-left: auto; font-family: var(--font-mono); font-size: 0.74rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--band-ink); text-decoration: none; border: 1px solid #4a463d; padding: 0.55rem 0.8rem; border-radius: 2px; white-space: nowrap; }
+.follow:hover { border-color: var(--band-gold); color: var(--band-gold); }
+nav.topics { background: var(--band); border-top: 1px solid #2a2824; position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--band); }
+nav.topics .wrap { overflow-x: auto; scrollbar-width: none; }
+nav.topics ul { list-style: none; display: flex; gap: 0.25rem; margin: 0; padding: 0; white-space: nowrap; }
+nav.topics a { display: block; padding: 0.7rem 0.7rem; font-family: var(--font-mono); font-size: 0.74rem; letter-spacing: 0.06em; text-transform: uppercase; color: #BDB5A4; text-decoration: none; border-bottom: 2px solid transparent; }
+nav.topics a:hover { color: var(--band-ink); }
+nav.topics a[aria-current="page"] { color: var(--band-ink); border-bottom-color: var(--band-gold); }
+
+main { padding-block: 2.5rem 4rem; }
+
+/* Home */
+.home { display: grid; grid-template-columns: minmax(0, 1fr) 18rem; gap: 3rem; }
+.feature { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 1.75rem; align-items: center; padding-bottom: 2.25rem; border-bottom: 1px solid var(--rule); text-decoration: none; }
+.feature .media { aspect-ratio: 16/9; }
+.feature h2 { font-family: var(--font-display); font-weight: 600; font-size: clamp(1.9rem, 3.6vw, 2.7rem); line-height: 1.08; margin: 0.45rem 0 0.7rem; text-wrap: balance; }
+.feature p { margin: 0; color: var(--muted); }
+.feature:hover h2 { color: var(--gold); }
+.filters { display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; margin: 2rem 0 1.5rem; }
+.filters .label { margin-right: 0.4rem; }
+.chip { border: 1px solid var(--rule); background: transparent; padding: 0.35rem 0.75rem; border-radius: 999px; font-family: var(--font-mono); font-size: 0.74rem; letter-spacing: 0.04em; cursor: pointer; color: var(--muted); }
+.chip[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.chip:hover { border-color: var(--ink); color: var(--ink); }
+.chip[aria-pressed="true"]:hover { color: var(--bg); }
+.grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.25rem 2rem; }
+.card { text-decoration: none; display: grid; gap: 0.55rem; align-content: start; }
+.card .media { aspect-ratio: 4/3; }
+.card h3 { font-family: var(--font-display); font-weight: 600; font-size: 1.55rem; line-height: 1.12; margin: 0.15rem 0 0; text-wrap: balance; }
+.card:hover h3 { color: var(--gold); }
+.card p { margin: 0; color: var(--muted); font-size: 0.98rem; }
+.meta { display: flex; flex-wrap: wrap; gap: 0.35rem 0.9rem; align-items: center; }
+.media { position: relative; overflow: hidden; background: var(--band); border-radius: 2px; max-width: 100%; }
+.media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.media.contain img { object-fit: contain; background: #EEEDE8; }
+.badge { position: absolute; left: 0.6rem; top: 0.6rem; background: rgba(18,18,18,0.82); color: #EFE8D8; font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.3rem 0.5rem; border-radius: 2px; display: flex; gap: 0.35rem; align-items: center; }
+.badge svg { width: 10px; height: 10px; fill: currentColor; }
+.reel-poster { width: 100%; height: 100%; display: grid; place-content: center; text-align: center; padding: 1.5rem; gap: 0.9rem; color: #EFE8D8; background:
+  radial-gradient(120% 80% at 50% 0%, #2b2820 0%, #121212 70%); }
+.reel-poster .q { font-family: var(--font-display); font-weight: 600; font-size: clamp(1.3rem, 2.6vw, 1.75rem); line-height: 1.12; text-wrap: balance; max-width: 18ch; margin: 0 auto; }
+.reel-poster .play { width: 46px; height: 46px; border: 1px solid #C9A24A; border-radius: 50%; display: grid; place-items: center; margin: 0 auto; }
+.reel-poster .play svg { width: 14px; height: 14px; fill: #C9A24A; margin-left: 3px; }
+.reel-poster .dur { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: #C9A24A; }
+
+aside.rail { display: grid; gap: 2rem; align-content: start; }
+.rail-block { border-top: 2px solid var(--ink); padding-top: 0.9rem; }
+.rail-block h4 { margin: 0 0 0.6rem; }
+.rail-block p { margin: 0 0 0.8rem; font-size: 0.97rem; }
+.topic-list { list-style: none; margin: 0; padding: 0; }
+.topic-list a { display: flex; justify-content: space-between; gap: 1rem; padding: 0.5rem 0; border-bottom: 1px solid var(--rule); text-decoration: none; font-size: 0.98rem; }
+.topic-list a:hover { color: var(--gold); }
+.topic-list .n { font-family: var(--font-mono); font-size: 0.78rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.principle { font-family: var(--font-display); font-style: italic; font-size: 1.35rem; line-height: 1.25; margin: 0; }
+
+/* Topic / list page */
+.page-head { max-width: var(--measure); margin-bottom: 2rem; }
+.page-head h1 { font-family: var(--font-display); font-weight: 600; font-size: clamp(2.2rem, 5vw, 3.2rem); line-height: 1.05; margin: 0.4rem 0 0.6rem; }
+.page-head p { color: var(--muted); margin: 0; }
+.rows { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
+.row { display: grid; grid-template-columns: 5.5rem minmax(0, 1fr) 9rem; gap: 1.25rem; padding: 1.25rem 0; border-bottom: 1px solid var(--rule); text-decoration: none; align-items: start; }
+.row:hover h3 { color: var(--gold); }
+.row h3 { font-family: var(--font-display); font-weight: 600; font-size: 1.45rem; line-height: 1.15; margin: 0 0 0.3rem; }
+.row p { margin: 0; color: var(--muted); font-size: 0.97rem; }
+.row .thumb { aspect-ratio: 4/3; }
+
+/* Post */
+.post-head { max-width: 48rem; margin: 0 auto 2rem; text-align: left; }
+.crumbs { display: flex; flex-wrap: wrap; gap: 0.5rem 0.9rem; align-items: center; }
+.crumbs a { text-decoration: none; }
+.crumbs a:hover { color: var(--ink); }
+.post-head h1 { font-family: var(--font-display); font-weight: 600; font-size: clamp(2.2rem, 5.4vw, 3.6rem); line-height: 1.03; margin: 0.7rem 0 0.9rem; text-wrap: balance; }
+.dek { font-size: 1.2rem; line-height: 1.5; color: var(--muted); margin: 0 0 1.2rem; max-width: var(--measure); }
+.byline { display: flex; align-items: center; gap: 0.75rem; padding-top: 1rem; border-top: 1px solid var(--rule); }
+.byline img { width: 36px; height: 36px; border-radius: 50%; }
+.byline .who { font-size: 0.95rem; font-weight: 600; }
+.hero { max-width: 56rem; margin: 0 auto 2.5rem; }
+.hero figure { margin: 0; }
+.hero img, .hero video { width: 100%; display: block; border-radius: 2px; background: var(--band); }
+.hero figcaption { margin-top: 0.6rem; }
+.hero.portrait { max-width: 36rem; }
+.watch-out { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 0.9rem; }
+.btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.65rem 1rem; border: 1px solid var(--ink); background: var(--ink); color: var(--bg); text-decoration: none; font-family: var(--font-mono); font-size: 0.76rem; letter-spacing: 0.06em; text-transform: uppercase; border-radius: 2px; cursor: pointer; }
+.btn.ghost { background: transparent; color: var(--ink); }
+.btn:hover { background: var(--gold); border-color: var(--gold); color: #121212; }
+.btn[disabled] { opacity: 0.5; cursor: not-allowed; }
+.reel-hero { aspect-ratio: 9/16; max-height: 70vh; max-width: 100%; margin: 0 auto; border-radius: 2px; overflow: hidden; }
+.reel-hero .reel-poster { padding: 2rem; }
+.reel-hero .reel-poster .q { font-size: clamp(1.6rem, 4vw, 2.2rem); }
+
+.body { max-width: var(--measure); margin: 0 auto; }
+.body p { margin: 0 0 1.15em; }
+.body > p:first-child::first-letter { font-family: var(--font-display); font-weight: 600; float: left; font-size: 4.1em; line-height: 0.82; padding: 0.06em 0.12em 0 0; color: var(--gold); }
+.body h2 { font-family: var(--font-display); font-weight: 600; font-size: 1.75rem; line-height: 1.15; margin: 2.2rem 0 0.7rem; text-wrap: balance; }
+.body blockquote { margin: 2rem 0; padding: 0 0 0 1.25rem; border-left: 2px solid var(--gold); font-family: var(--font-display); font-style: italic; font-size: 1.6rem; line-height: 1.25; }
+.body .example { background: var(--surface); border: 1px solid var(--rule); padding: 1.1rem 1.25rem; margin: 1.5rem 0; font-size: 1rem; }
+.body .example .label { display: block; margin-bottom: 0.4rem; }
+.body .checklist { list-style: none; padding: 0; margin: 1.5rem 0; display: grid; gap: 0.5rem; }
+.body .checklist li { display: flex; gap: 0.75rem; align-items: baseline; font-weight: 600; }
+.body .checklist li::before { content: "✓"; font-family: var(--font-mono); color: var(--gold); }
+.body figure { margin: 2rem 0; }
+.body figure img { width: 100%; border-radius: 2px; }
+.cite { font-family: var(--font-mono); font-size: 0.66em; vertical-align: super; line-height: 0; white-space: nowrap; }
+.cite button { background: none; border: 0; padding: 0 0.08em; color: var(--gold); cursor: pointer; font-weight: 500; }
+.cite button:hover { text-decoration: underline; }
+.ask { max-width: var(--measure); margin: 2.5rem auto 0; padding: 1.25rem 1.4rem; background: var(--gold-soft); border-radius: 2px; }
+.ask p { margin: 0.35rem 0 0; font-family: var(--font-display); font-size: 1.4rem; line-height: 1.25; font-weight: 600; }
+.sources { max-width: var(--measure); margin: 2.5rem auto 0; border-top: 2px solid var(--ink); padding-top: 1rem; }
+.sources ol { margin: 0.75rem 0 0; padding: 0; list-style: none; counter-reset: s; display: grid; gap: 0.7rem; }
+.sources li { display: grid; grid-template-columns: 2rem minmax(0, 1fr); gap: 0.5rem; font-size: 0.97rem; border-radius: 2px; transition: background 0.6s; }
+.sources li .num { font-family: var(--font-mono); color: var(--gold); font-size: 0.85rem; padding-top: 0.15rem; }
+.sources li.flash { background: var(--gold-soft); }
+.sources a { color: var(--gold); text-decoration-thickness: 1px; text-underline-offset: 2px; word-break: break-word; }
+.sources .src-name { font-weight: 600; }
+.tags { max-width: var(--measure); margin: 2rem auto 0; display: flex; flex-wrap: wrap; gap: 0.4rem 0.8rem; }
+.tags span { font-family: var(--font-mono); font-size: 0.74rem; color: var(--muted); }
+
+/* Quiz */
+.quiz { max-width: var(--measure); margin: 0 auto 1.5rem; display: grid; gap: 0.6rem; }
+.quiz .opt { text-align: left; display: grid; grid-template-columns: 2rem minmax(0, 1fr); gap: 0.6rem; padding: 0.9rem 1rem; border: 1px solid var(--rule); background: var(--surface); border-radius: 2px; cursor: pointer; font-size: 1rem; line-height: 1.5; }
+.quiz .opt:hover:not([disabled]) { border-color: var(--ink); }
+.quiz .opt .k { font-family: var(--font-mono); font-weight: 500; color: var(--gold); }
+.quiz .opt.right { border-color: var(--gold); box-shadow: inset 3px 0 0 var(--gold); }
+.quiz .opt.wrong { border-color: var(--danger); box-shadow: inset 3px 0 0 var(--danger); }
+.quiz .opt[disabled] { cursor: default; }
+.quiz .why { font-size: 0.93rem; color: var(--muted); grid-column: 2; margin-top: 0.3rem; }
+.verdict { max-width: var(--measure); margin: 0 auto 1.5rem; padding: 1.1rem 1.25rem; border: 1px solid var(--gold); border-radius: 2px; }
+.verdict h3 { font-family: var(--font-display); font-size: 1.5rem; margin: 0.2rem 0 0.4rem; }
+.verdict p { margin: 0; }
+
+/* Comments */
+.comments { max-width: var(--measure); margin: 3.5rem auto 0; border-top: 2px solid var(--ink); padding-top: 1rem; }
+.comments h2 { font-family: var(--font-display); font-weight: 600; font-size: 1.8rem; margin: 0.2rem 0 1rem; }
+.composer { display: grid; gap: 0.6rem; margin-bottom: 1.75rem; }
+.composer textarea { width: 100%; min-height: 6.5rem; resize: vertical; padding: 0.8rem 0.9rem; border: 1px solid var(--rule); background: var(--surface); color: var(--ink); font: inherit; font-size: 1rem; border-radius: 2px; }
+.composer textarea:focus { border-color: var(--ink); outline: none; }
+.composer .bar { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 0.75rem; }
+.note { font-size: 0.92rem; color: var(--muted); }
+.note.err { color: var(--danger); }
+.thread { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.25rem; }
+.cmt { display: grid; grid-template-columns: 2.4rem minmax(0, 1fr); gap: 0.8rem; }
+.avatar { width: 2.4rem; height: 2.4rem; border-radius: 50%; display: grid; place-items: center; font-family: var(--font-mono); font-size: 0.8rem; background: var(--gold-soft); color: var(--gold); overflow: hidden; }
+.avatar img { width: 100%; height: 100%; object-fit: cover; }
+.cmt .head { display: flex; flex-wrap: wrap; gap: 0.3rem 0.7rem; align-items: baseline; }
+.cmt .name { font-weight: 600; font-size: 0.97rem; }
+.cmt .author-tag { font-family: var(--font-mono); font-size: 0.64rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--band); background: var(--gold); padding: 0.1rem 0.35rem; border-radius: 2px; }
+.cmt .text { margin: 0.25rem 0 0; white-space: pre-wrap; overflow-wrap: anywhere; font-size: 1rem; }
+.cmt .text ul { margin: 0.4rem 0; padding-left: 1.1rem; white-space: normal; }
+.cmt .act { margin-top: 0.3rem; display: flex; gap: 0.75rem; }
+.linkbtn { background: none; border: 0; padding: 0; font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); cursor: pointer; }
+.linkbtn:hover { color: var(--danger); }
+.empty { padding: 1rem 0; color: var(--muted); font-style: italic; }
+
+.pager { max-width: 48rem; margin: 3.5rem auto 0; display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; border-top: 1px solid var(--rule); padding-top: 1.25rem; }
+.pager a { text-decoration: none; display: grid; gap: 0.3rem; }
+.pager a:last-child { text-align: right; }
+.pager .t { font-family: var(--font-display); font-weight: 600; font-size: 1.25rem; line-height: 1.15; }
+.pager a:hover .t { color: var(--gold); }
+
+/* Sources library */
+.lib { max-width: 52rem; }
+.lib h2 { font-family: var(--font-display); font-weight: 600; font-size: 1.6rem; margin: 2.2rem 0 0.4rem; }
+.lib ul { list-style: none; padding: 0; margin: 0; border-top: 1px solid var(--rule); }
+.lib li { padding: 0.9rem 0; border-bottom: 1px solid var(--rule); display: grid; gap: 0.25rem; }
+.lib li a.src { color: var(--gold); font-weight: 600; text-underline-offset: 2px; }
+.lib .cited { font-size: 0.9rem; color: var(--muted); }
+.lib .cited a { color: var(--ink); }
+
+.about { max-width: var(--measure); }
+.about p { margin: 0 0 1.1em; }
+.about .principle { font-size: 1.9rem; margin: 1.5rem 0 2rem; padding-left: 1.25rem; border-left: 2px solid var(--gold); }
+.about ul { padding-left: 1.1rem; }
+.about li { margin-bottom: 0.4rem; }
+
+footer.site { background: var(--band); color: #BDB5A4; }
+footer.site .wrap { padding-block: 2rem; display: flex; flex-wrap: wrap; gap: 1rem 2rem; justify-content: space-between; align-items: center; font-family: var(--font-mono); font-size: 0.74rem; letter-spacing: 0.05em; }
+footer.site a { color: var(--band-ink); }
+
+@media (max-width: 900px) {
+  .home { grid-template-columns: minmax(0, 1fr); }
+  .feature { grid-template-columns: minmax(0, 1fr); gap: 1rem; }
+}
+@media (max-width: 620px) {
+  .grid { grid-template-columns: minmax(0, 1fr); }
+  .row { grid-template-columns: 4.5rem minmax(0, 1fr); }
+  .row .thumb { display: none; }
+  .masthead img { width: 48px; height: 48px; }
+  .follow { display: none; }
+  .pager { grid-template-columns: minmax(0, 1fr); }
+  .pager a:last-child { text-align: left; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
+</style>
+
+<header class="masthead">
+  <div class="wrap">
+    <img src="media/logo.png" alt="" width="64" height="64">
+    <a class="brand" href="#home">
+      <span class="brand-name">The Untested Narrative</span>
+      <span class="brand-tag">Evidence. Due process. Accountability.</span>
+    </a>
+    <a class="follow" href="https://www.facebook.com/profile.php?id=61596604298667" target="_blank" rel="noopener">Follow on Facebook ↗</a>
+  </div>
+</header>
+<nav class="topics" aria-label="Sections"><div class="wrap"><ul id="nav"></ul></div></nav>
+<main><div class="wrap" id="view"></div></main>
+<footer class="site"><div class="wrap">
+  <span>© 2026 The Untested Narrative · Evidence-led writing on wrongful convictions and failures of justice.</span>
+  <span><a href="#sources">Sources library</a> · <a href="#about">About</a> · <a href="https://www.facebook.com/profile.php?id=61596604298667" target="_blank" rel="noopener">Facebook</a> · <a href="https://www.youtube.com/watch?v=Gt9Tb6KX838" target="_blank" rel="noopener">YouTube</a></span>
+</div></footer>
+
+<script>
+const FB_PAGE = "https://www.facebook.com/profile.php?id=61596604298667";
+const TOPICS = {
+  investigations: { name: "Investigations", blurb: "Tunnel vision, confirmation bias and what happens when a theory replaces the search for the truth." },
+  juries: { name: "Juries & Deliberation", blurb: "How twelve strangers reach a verdict, and the group pressures inside the deliberation room." },
+  "fair-trial": { name: "Evidence & Fair Trial", blurb: "Rules of evidence, the right to a full defence, and where the line should be drawn." },
+  witnesses: { name: "Witness Credibility", blurb: "Why sounding convincing is not the same as being accurate." },
+  wrongful: { name: "Wrongful Convictions", blurb: "How innocent people end up behind bars, and what the system misses." }
+};
+const FORMATS = { long: "Long read", video: "Video", reel: "1-min video", quiz: "Quiz" };
+const PLAY = '<svg viewBox="0 0 10 12" aria-hidden="true"><path d="M0 0l10 6-10 6z"/></svg>';
+
+const POSTS = [
+{
+  slug: "investigators-stop-looking-for-truth", file: 7, date: "2026-11-21", format: "video", topics: ["investigations"],
+  title: "What Happens When Investigators Stop Looking for the Truth?",
+  dek: "An investigation is supposed to be a search for the truth, not a mission to prove a theory.",
+  video: { src: "media/explainer-tunnel-vision.mp4", poster: "media/explainer-poster.jpg", minutes: "9 min", youtube: "https://www.youtube.com/watch?v=Gt9Tb6KX838" },
+  card: "media/explainer-poster.jpg",
+  body: `
+<p>An investigation is supposed to be a search for the truth, not a mission to prove a theory.</p>
+<p>In this video, we break down what happens when investigators stop looking for the truth and let belief replace objective fact-finding. When confirmation bias and tunnel vision take over, critical evidence gets ignored and the entire case goes off the rails.</p>
+<p>Watch the full breakdown above.</p>`,
+  ask: "Have you ever seen a case ruined by tunnel vision?",
+  tags: ["TheUntestedNarrative", "CriminalJustice", "WrongfulConviction", "ConfirmationBias", "TunnelVision", "TrueCrime"],
+  sources: []
+},
+{
+  slug: "quiz-tunnel-vision", file: 6, date: "2026-11-21", format: "quiz", topics: ["investigations"],
+  title: "Quick Quiz: Can You Spot Investigative Tunnel Vision?",
+  dek: "Four scenarios from the criminal justice system. Only one is a textbook case of tunnel vision.",
+  image: { src: "media/theory-before-evidence.jpg", alt: "When the theory comes before the evidence. Confirmation bias. Tunnel vision. Wrongful convictions.", wide: true },
+  card: "media/theory-before-evidence.jpg", cardPos: "left center",
+  quiz: {
+    q: "Which scenario best exemplifies the concept of investigative “tunnel vision” in criminal justice?",
+    answer: "D",
+    options: [
+      ["A", "A defence legal team requests independent laboratory analysis on previously unexamined biological samples.", "Requesting independent lab testing is standard defence practice to ensure evidence is thoroughly examined."],
+      ["B", "An appellate judge quashes a conviction due to procedural misdirection in the trial judge's instructions.", "Quashing a conviction due to procedural misdirection is judicial oversight and due process in action."],
+      ["C", "A prosecutor decides not to bring charges because witness statements contain irreconcilable contradictions.", "Declining to bring charges over contradictory witness statements shows objective evaluation rather than rushing to judgment."],
+      ["D", "Investigators prematurely adopt a hypothesis of guilt and selectively collect or interpret evidence to confirm that theory while ignoring alternative explanations.", ""]
+    ],
+    explain: "Investigative “tunnel vision” is a cognitive bias where investigators prematurely focus on a single suspect or theory of guilt. Once locked in, they unconsciously seek out and prioritise evidence that confirms that belief while ignoring or downplaying alternative explanations and exonerating evidence."
+  },
+  body: ``,
+  ask: "How did you do? Post your answer, then tell us why.",
+  tags: ["CriminalJustice", "TunnelVision", "WrongfulConviction", "ConfirmationBias", "LegalQuiz", "DueProcess", "JusticeSystem"],
+  sources: []
+},
+{
+  slug: "can-you-tell-when-someone-is-lying", file: 5, date: "2026-11-21", format: "reel", topics: ["juries", "witnesses"],
+  title: "Can You Tell When Someone Is Lying Just by Looking at Them?",
+  dek: "Juries rely on body language and instinct every day. In a courtroom, a “gut feeling” can ruin an innocent life.",
+  reel: { url: "https://www.facebook.com/reel/2196572921235605/", minutes: "1 min", q: "Do you trust your gut instinct?" },
+  body: `
+<p>We often think we can tell when someone is lying just by looking at them, but in a courtroom, relying on a “gut feeling” can ruin an innocent life.</p>
+<p>Human intuition is notoriously bad at separating truth from falsehood, yet juries rely on body language and instinct every single day.</p>
+<p>Watch how cognitive bias and guesswork can tip the scales of justice in the wrong direction.</p>`,
+  ask: "Do you trust your gut instinct, or do you think it's easily fooled?",
+  tags: ["JuryDuty", "Psychology", "CriminalJustice", "WrongfulConviction", "CognitiveBias", "TrueCrime"],
+  sources: []
+},
+{
+  slug: "silent-agreement", file: 4, date: "2026-11-21", format: "long", topics: ["juries"],
+  title: "Silent Agreement: How Group Conformity Erases Juror Doubt",
+  dek: "We want to believe verdicts are a careful weighing of the evidence. Inside the deliberation room, peer pressure plays a larger part than most people realise.",
+  image: { src: "media/silent-agreement.jpg", alt: "Infographic: Silent Agreement, how group pressure can influence jury decisions. Mechanics of jury conformity, pressures driving consensus, systemic consequences and remedies." },
+  card: "media/silent-agreement.jpg", cardContain: true,
+  body: `
+<p>We want to believe jury verdicts are 100% logical, based on a careful weighing of the evidence [[1]]. But the reality of how 12 strangers make life-altering decisions is far more complex, and vulnerable to peer pressure [[1,2]].</p>
+<p>New research and insights from the British Psychological Society (BPS) shed light on the unseen pressures inside the deliberation room.</p>
+<h2>The “Story Model” of decision making</h2>
+<p>Rather than weighing facts piece by piece, jurors typically create “stories” to make sense of what they hear [[1]]. These narratives are heavily informed by pre-trial beliefs, personal experiences, and bias [[1]]. The danger is “narrative coherence distortion”: once a juror leans toward a certain story, ambiguous evidence is often warped to fit that narrative to maintain a sense of completeness [[1]].</p>
+<h2>The influence of dominant personalities</h2>
+<p>Deliberations are not democratic math; they are group dynamics dominated by the most vocal [[1]]. Often, extraverted or strong personalities dictate the group's narrative [[1]]. Lesser-spoken jurors, like participants in Solomon Asch’s famous conformity experiments, often disregard their own visual or factual evaluations just to align with the majority [[1]].</p>
+<h2>Unanimous verdict pressure and fearing group failure</h2>
+<p>In England and Wales, the pressure to reach consensus is immense [[1]]. Holdout jurors with genuine doubts frequently face massive social pressure “not to fail” the panel by forcing a hung jury [[1]]. Under time constraints, some jurors will simply abandon reasonable doubt to avoid interpersonal conflict and “get it over with” [[1]].</p>
+<blockquote>Some jurors will simply abandon reasonable doubt to avoid interpersonal conflict.</blockquote>
+<h2>The danger of unchecked intuition</h2>
+<p>As Dr Rebecca Helm from the University of Exeter warns, when juries are deprived of evidence-based parameters and faced with ambiguous or emotionally charged testimony, they become far more susceptible to basing decisions on unguided “intuition” and legally irrelevant information, greatly increasing the risk of wrongful convictions [[3]].</p>
+<p>The challenge for the justice system is clear: we must encourage genuine discussion and provide better evidence-based jury directions, ensuring no voice is pressured into silence [[1,3]].</p>`,
+  ask: "Have you ever felt the pressure to conform in a group decision? How can courts protect the right of holdout jurors to maintain their doubts?",
+  tags: ["CriminalJustice", "JuryTrials", "Conformity", "CognitiveBias", "Psychology", "MiscarriageOfJustice", "DueProcess", "Groupthink", "LegalReform", "ContextMatters"],
+  sources: [
+    { name: "Dr Howard Fine & Dr Lee Curley (BPS)", title: "Crucial discourse on our jury system", url: "https://www.bps.org.uk/psychologist/crucial-discourse-our-jury-system", kind: "Research & commentary" },
+    { name: "Solomon Asch", title: "Conformity experiments (Open Social Psychology, ch. 21)", url: "https://forrt.org/open-social-psychology/chapter21.html", kind: "Research & commentary" },
+    { name: "Dr Rebecca Helm / University of Exeter", title: "Research warns of systematic weaknesses in jury decisions", url: "https://news.exeter.ac.uk/faculty-of-humanities-arts-and-social-sciences/research-warns-of-systematic-weaknesses-in-jury-decisions/", kind: "Research & commentary" }
+  ]
+},
+{
+  slug: "privacy-and-the-defence", file: 3, date: "2026-11-21", format: "long", topics: ["fair-trial"],
+  title: "When Does Protecting Privacy Become an Unfair Restriction on the Defence?",
+  dek: "A complainant’s sexual history is not permission. But what happens when specific evidence is needed to challenge a materially misleading account, and the jury never hears it?",
+  image: { src: "media/excluding-evidence.jpg", alt: "Excluding relevant contextual evidence: how overly restrictive rape shield rules violate the right to a fair trial.", portrait: true },
+  card: "media/excluding-evidence.jpg", cardContain: true,
+  body: `
+<p>A complainant’s sexual history is not permission. Previous consent does not establish consent on another occasion [[3]].</p>
+<p>But what happens when specific evidence is needed to challenge a materially misleading account, and the jury never hears it [[1,2]]?</p>
+<h2>The Supreme Court has identified a real concern</h2>
+<p>In November 2025, the UK Supreme Court ruled that the Scottish courts’ approach to certain evidential restrictions in sexual-offence trials needed modification because it was liable to infringe defendants’ fair-trial rights [[1]].</p>
+<p>In <em>Daly and Keir v His Majesty’s Advocate</em>, the Court criticised an approach under which evidence concerning a complainant’s credibility or sexual behaviour was almost always excluded. Excessive restrictions, the Court explained, can prevent defendants from presenting a full defence and challenging the prosecution’s evidence [[1]].</p>
+<p>The point of this is not that all sexual-history evidence should automatically be admitted. It is that courts must examine what particular evidence actually contributes to a fair trial [[1]].</p>
+<h2>Scottish advocate Thomas Ross KC has also raised concerns</h2>
+<p>According to Scottish Legal, he stopped accepting sexual-offence cases over trial-fairness concerns and criticised restrictions on challenging allegedly false accounts of material facts. He argued that these over-stretched shield laws have prevented defence lawyers from putting critical, context-establishing evidence before juries [[2]].</p>
+<h2>Sexual history and evidence of a false statement are different things</h2>
+<p>Someone’s sexual history does not make them dishonest [[3]].</p>
+<p>But evidence that a particular, materially relevant statement is false raises a different question [[4]].</p>
+<div class="example"><span class="label gold">For example</span>Consider an accusation where the complainant makes a specific factual claim, such as having no previous sexual experience, to bolster their narrative, but objective, verifiable medical records or digital evidence directly disprove this claim. In such a scenario, the evidence is not sought to make an assumption about character, but to challenge a demonstrably false statement of material fact that has been placed before the jury.</div>
+<p>CPS guidance for England and Wales recognises that questioning focused purely on the falsity of an earlier allegation does not automatically engage sexual-history restrictions. There must, however, be a proper evidential basis for saying it was false. A withdrawn complaint or an acquittal is not automatically proof of fabrication [[4]].</p>
+<h2>Fairness must protect both sides</h2>
+<p>In the House of Lords case <em>R v A (No 2)</em>, Lord Steyn explained that evidence should not be excluded where its relevance to consent is so significant that exclusion would endanger the trial’s fairness. He also recognised that a previous sexual relationship cannot prove consent on the occasion being investigated [[3]].</p>
+<p>Dr Rebecca Helm, whose research on jury decision-making is discussed by the University of Exeter, warns that when juries are deprived of evidence-based parameters and faced with ambiguous or emotionally charged testimony, they are more susceptible to basing decisions on unguided “intuition” and legally irrelevant information, heightening the risk of wrongful convictions [[5]].</p>
+<p>The argument is not that complainants should have their private lives put on trial. It is that protective rules must not prevent defendants from presenting evidence necessary for a fair defence [[3]].</p>
+<ul class="checklist"><li>Protect people from irrelevant intrusion.</li><li>Scrutinise materially relevant claims.</li><li>Preserve the right to a fair trial.</li></ul>`,
+  ask: "Where should courts draw the line between protecting privacy and allowing evidence needed to challenge a misleading account?",
+  tags: ["CriminalJustice", "FairTrial", "DueProcess", "WrongfulConviction", "LegalReform", "ContextMatters"],
+  sources: [
+    { name: "UK Supreme Court", title: "Daly and Keir v His Majesty’s Advocate, press summary (UKSC 2023/0107)", url: "https://www.supremecourt.uk/cases/press-summary/uksc-2023-0107", kind: "Courts & case law" },
+    { name: "Scottish Legal", title: "Wave of sex offence appeals could be just beginning, warns Thomas Ross KC", url: "https://www.scottishlegal.com/articles/wave-of-sex-offence-appeals-could-be-just-beginning-warns-thomas-ross-kc", kind: "News & reporting" },
+    { name: "House of Lords", title: "R v A (No 2), judgment", url: "https://publications.parliament.uk/pa/ld200001/ldjudgmt/jd010517/regina-2.htm", kind: "Courts & case law" },
+    { name: "Crown Prosecution Service", title: "Prosecution guidance on previous allegedly false complaints", url: "https://www.cps.gov.uk/cy/node/29417", kind: "Official guidance" },
+    { name: "Dr Rebecca Helm / University of Exeter", title: "Research warns of systematic weaknesses in jury decisions", url: "https://news.exeter.ac.uk/faculty-of-humanities-arts-and-social-sciences/research-warns-of-systematic-weaknesses-in-jury-decisions/", kind: "Research & commentary" }
+  ]
+},
+{
+  slug: "convincing-is-not-accurate", file: 2, date: "2026-11-21", format: "long", topics: ["witnesses"],
+  title: "Convincing ≠ Accurate: How Should Courts Assess a Witness’s Account?",
+  dek: "Can someone sound convincing and still be wrong? When a case rests on one witness, the question is not who seems believable but whether the account is reliable.",
+  image: { src: "media/convincing-accurate.jpg", alt: "Convincing does not equal accurate: how should courts assess a witness's account?", portrait: true },
+  card: "media/convincing-accurate.jpg", cardContain: true,
+  body: `
+<p>When a criminal case rests heavily on one witness’s account, the challenge is not simply deciding who seems believable. It is establishing whether their account is reliable.</p>
+<p>Many believe we can easily spot a liar through “intuition” or body language, but the psychological science tells a different story [[2]].</p>
+<p>In written evidence to Parliament, Dr Rebecca Helm from the University of Exeter's Evidence-Based Justice Lab explained that behaviours often associated with lying, like avoiding eye contact or fidgeting, have little to no value as indicators of deception. She also warned that inconsistencies about small, peripheral details are often just natural forgetting, not dishonesty [[3]].</p>
+<blockquote>Confidence does not equal accuracy, and nervousness does not equal dishonesty.</blockquote>
+<p>This applies to complainants and defendants alike.</p>
+<p>In a fair justice system, scrutiny is not about distrust. It is about ensuring accuracy. Fact-checking, analysing context, and testing competing narratives must never be optional.</p>
+<p>Taking allegations seriously and protecting the innocent are not opposing goals; both require the exact same commitment to finding the truth.</p>`,
+  ask: "How should courts ensure that impressions of credibility don't become a substitute for actual proof?",
+  tags: ["CriminalJustice", "DueProcess", "WrongfulConviction", "WitnessTestimony", "LegalFacts", "EvidenceBasedJustice", "JusticeReform"],
+  sources: [
+    { name: "Crown Prosecution Service", title: "How the CPS charges and prosecutes rape cases", url: "https://www.cps.gov.uk/how-cps-charges-and-prosecutes-rape-cases", kind: "Official guidance" },
+    { name: "Bond & DePaulo", title: "Accuracy of deception judgments (research on deception judgments)", url: "https://pubmed.ncbi.nlm.nih.gov/16859438/", kind: "Research & commentary" },
+    { name: "Dr Rebecca Helm", title: "Written evidence to Parliament", url: "https://committees.parliament.uk/writtenevidence/42126/pdf/", kind: "Research & commentary" }
+  ]
+},
+{
+  slug: "when-the-system-fails", file: 1, date: "2026-11-21", format: "reel", topics: ["wrongful"],
+  title: "When the Justice System Gets It Wrong",
+  dek: "From flawed eyewitness testimony to false confessions and systemic bias, innocent people end up behind bars far more often than we think.",
+  reel: { url: "https://www.facebook.com/reel/1480019360747797/", minutes: "1 min", q: "What happens when the system fails?" },
+  body: `
+<p>We want to believe the justice system always gets it right, but what happens when it fails?</p>
+<p>From flawed eyewitness testimonies to false confessions and systemic bias, innocent people end up behind bars far more often than we think.</p>
+<p>Watch this one-minute breakdown of how a broken system can trap the wrong person.</p>`,
+  ask: "What do you think is the biggest flaw in the justice system today?",
+  tags: ["WrongfulConviction", "JusticeSystem", "TrueCrime", "CriminalJusticeReform", "InnocenceProject", "LegalFacts"],
+  sources: []
+}
+];
+
+// Author replies carried over from the Facebook page
+const AUTHOR_REPLIES = {
+  "quiz-tunnel-vision": `<strong>Correct answer: D!</strong>\nInvestigative “tunnel vision” is a cognitive bias where investigators prematurely focus on a single suspect or theory of guilt. Once locked in, they unconsciously seek out and prioritise evidence that confirms that belief while ignoring or downplaying alternative explanations and exonerating evidence.\nHere’s why the other options aren't tunnel vision:<ul><li>A) Requesting independent lab testing is standard defence practice to ensure evidence is thoroughly examined.</li><li>B) Quashing a conviction due to procedural misdirection is judicial oversight and due process in action.</li><li>C) Declining to bring charges over contradictory witness statements shows objective evaluation rather than rushing to judgment.</li></ul>How did you do?`
+};
+
+const pad = n => String(n).padStart(3, "0");
+const fmtDate = d => new Date(d + "T12:00:00").toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric" });
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const words = p => (p.body.replace(/<[^>]+>/g, " ") + " " + (p.quiz ? p.quiz.options.map(o => o[1]).join(" ") : "")).split(/\s+/).filter(Boolean).length;
+function readTime(p) {
+  if (p.video) return p.video.minutes + " watch";
+  if (p.reel) return p.reel.minutes + " watch";
+  if (p.quiz) return "2 min quiz";
+  return Math.max(1, Math.round(words(p) / 220)) + " min read";
+}
+const ordered = () => [...POSTS].sort((a, b) => b.file - a.file);
+const bySlug = s => POSTS.find(p => p.slug === s);
+
+/* ---------- comments state ---------- */
+let db = null, usr = null, me = null, isOwner = false;
+let cState = "loading"; // loading | ready | slow | off | error
+let allComments = [];
+const names = {};
+const counts = () => { const c = {}; allComments.forEach(x => c[x.post] = (c[x.post] || 0) + 1); Object.keys(AUTHOR_REPLIES).forEach(k => c[k] = (c[k] || 0) + 1); return c; };
+
+function media(p, cls = "") {
+  if (p.reel) return `<div class="media ${cls}"><div class="reel-poster"><span class="play">${PLAY}</span><span class="q">${esc(p.reel.q)}</span><span class="dur">${esc(p.reel.minutes)} · Facebook Reel</span></div></div>`;
+  const badge = p.video ? `<span class="badge">${PLAY} ${esc(p.video.minutes)} video</span>` : p.quiz ? `<span class="badge">Quiz</span>` : "";
+  return `<div class="media ${cls} ${p.cardContain ? "contain" : ""}"><img src="${p.card}" alt="" loading="lazy"${p.cardPos ? ` style="object-position:${p.cardPos}"` : ""}>${badge}</div>`;
+}
+function metaLine(p, withComments = true) {
+  const c = counts()[p.slug] || 0;
+  return `<div class="meta"><span class="label gold">File ${pad(p.file)}</span><span class="label">${TOPICS[p.topics[0]].name}</span><span class="label">${readTime(p)}</span>${withComments ? `<span class="label" data-count="${p.slug}">${c} comment${c === 1 ? "" : "s"}</span>` : ""}</div>`;
+}
+
+/* ---------- views ---------- */
+const view = document.getElementById("view");
+let homeFilter = "all";
+
+function renderNav(active) {
+  const items = [["home", "Latest"], ...Object.entries(TOPICS).map(([k, t]) => ["topic-" + k, t.name]), ["sources", "Sources"], ["about", "About"]];
+  document.getElementById("nav").innerHTML = items.map(([h, n]) => `<li><a href="#${h}" ${active === h ? 'aria-current="page"' : ""}>${esc(n)}</a></li>`).join("");
+}
+
+function renderHome() {
+  renderNav("home");
+  const list = ordered();
+  const feat = list[0];
+  const rest = list.slice(1).filter(p => homeFilter === "all" || (homeFilter === "video" ? (p.format === "video" || p.format === "reel") : p.format === homeFilter));
+  const tc = {}; POSTS.forEach(p => p.topics.forEach(t => tc[t] = (tc[t] || 0) + 1));
+  const chip = (k, n) => `<button class="chip" data-filter="${k}" aria-pressed="${homeFilter === k}">${n}</button>`;
+  view.innerHTML = `
+  <div class="home">
+    <div style="min-width:0">
+      <a class="feature" href="#post-${feat.slug}">
+        ${media(feat)}
+        <div>
+          <span class="label gold">Featured · File ${pad(feat.file)}</span>
+          <h2>${esc(feat.title)}</h2>
+          <p>${esc(feat.dek)}</p>
+          <div class="meta" style="margin-top:0.9rem"><span class="label">${TOPICS[feat.topics[0]].name}</span><span class="label">${readTime(feat)}</span></div>
+        </div>
+      </a>
+      <div class="filters" role="group" aria-label="Filter by format"><span class="label">Show</span>${chip("all", "Everything")}${chip("long", "Long reads")}${chip("video", "Videos")}${chip("quiz", "Quizzes")}</div>
+      <div class="grid">${rest.map(p => `
+        <a class="card" href="#post-${p.slug}">${media(p)}${metaLine(p)}<h3>${esc(p.title)}</h3><p>${esc(p.dek)}</p></a>`).join("") || `<p class="empty">Nothing in this format yet.</p>`}
+      </div>
+    </div>
+    <aside class="rail">
+      <div class="rail-block">
+        <h4 class="label">About this site</h4>
+        <p>Taking sexual violence seriously. Protecting the innocent. Evidence-led writing on wrongful convictions, disputed allegations and failures of justice.</p>
+        <a class="btn ghost" href="#about">Read more</a>
+      </div>
+      <div class="rail-block">
+        <h4 class="label">Topics</h4>
+        <ul class="topic-list">${Object.entries(TOPICS).map(([k, t]) => `<li><a href="#topic-${k}"><span>${t.name}</span><span class="n">${pad(tc[k] || 0)}</span></a></li>`).join("")}</ul>
+      </div>
+      <div class="rail-block">
+        <h4 class="label">Principle</h4>
+        <p class="principle">“Taking allegations seriously and protecting the innocent are not opposing goals.”</p>
+      </div>
+      <div class="rail-block">
+        <h4 class="label">Every claim, sourced</h4>
+        <p>Court judgments, official guidance and research cited across the site, in one place.</p>
+        <a class="btn ghost" href="#sources">Sources library</a>
+      </div>
+    </aside>
+  </div>`;
+  view.querySelectorAll("[data-filter]").forEach(b => b.addEventListener("click", () => { homeFilter = b.dataset.filter; renderHome(); }));
+}
+
+function renderTopic(key) {
+  const t = TOPICS[key]; if (!t) return renderHome();
+  renderNav("topic-" + key);
+  const list = ordered().filter(p => p.topics.includes(key));
+  view.innerHTML = `
+  <header class="page-head"><span class="label gold">Topic</span><h1>${esc(t.name)}</h1><p>${esc(t.blurb)}</p></header>
+  <ul class="rows">${list.map(p => `<li><a class="row" href="#post-${p.slug}">
+    <span class="label gold" style="padding-top:0.35rem">File ${pad(p.file)}<br><span style="color:var(--muted)">${FORMATS[p.format]}</span></span>
+    <span style="min-width:0"><h3>${esc(p.title)}</h3><p>${esc(p.dek)}</p></span>
+    ${media(p, "thumb")}</a></li>`).join("")}</ul>`;
+}
+
+function citeHTML(html) {
+  return html.replace(/\[\[([\d, ]+)\]\]/g, (_, nums) => `<span class="cite">[${nums.split(",").map(n => n.trim()).map(n => `<button type="button" data-ref="${n}" aria-label="Source ${n}">${n}</button>`).join(",")}]</span>`);
+}
+
+function renderPost(slug) {
+  const p = bySlug(slug); if (!p) return renderHome();
+  renderNav("topic-" + p.topics[0]);
+  const list = ordered(); const i = list.indexOf(p);
+  const newer = list[i - 1], older = list[i + 1];
+  let hero = "";
+  if (p.video) hero = `<div class="hero"><figure><video controls preload="metadata" playsinline poster="${p.video.poster}" src="${p.video.src}"></video><figcaption class="watch-out"><a class="btn ghost" href="${p.video.youtube}" target="_blank" rel="noopener">Watch in HD on YouTube ↗</a></figcaption></figure></div>`;
+  else if (p.reel) hero = `<div class="hero"><div class="reel-hero">${media(p).replace('class="media ', 'class="media " style="height:100%"')}</div><div class="watch-out" style="justify-content:center"><a class="btn" href="${p.reel.url}" target="_blank" rel="noopener">${PLAY.replace('aria-hidden="true"', 'aria-hidden="true" width="10" height="12" fill="currentColor"')} Watch the video on Facebook ↗</a></div></div>`;
+  else if (p.image) hero = `<div class="hero ${p.image.portrait ? "portrait" : ""}"><figure><img src="${p.image.src}" alt="${esc(p.image.alt)}"></figure></div>`;
+  const quiz = p.quiz ? `
+    <div class="body" style="margin-bottom:1rem"><p style="font-size:1.25rem;font-family:var(--font-display);font-weight:600;line-height:1.3">${esc(p.quiz.q)}</p><p class="label">Pick an answer to reveal the explanation</p></div>
+    <div class="quiz" id="quiz">${p.quiz.options.map(o => `<button class="opt" type="button" data-k="${o[0]}"><span class="k">${o[0]})</span><span>${esc(o[1])}</span></button>`).join("")}</div>
+    <div id="verdict"></div>` : "";
+  const sources = p.sources.length ? `<section class="sources" aria-label="Sources"><h2 class="label">Sources & case law</h2><ol>${p.sources.map((s, n) => `<li id="src-${n + 1}"><span class="num">[${n + 1}]</span><span><span class="src-name">${esc(s.name)}</span> — ${esc(s.title)}<br><a href="${s.url}" target="_blank" rel="noopener">${esc(s.url.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, ""))}</a></span></li>`).join("")}</ol></section>` : "";
+  view.innerHTML = `
+  <article>
+    <header class="post-head">
+      <div class="crumbs"><span class="label gold">File ${pad(p.file)}</span>${p.topics.map(t => `<a class="label" href="#topic-${t}">${TOPICS[t].name}</a>`).join("")}<span class="label">${FORMATS[p.format]}</span></div>
+      <h1>${esc(p.title)}</h1>
+      <p class="dek">${esc(p.dek)}</p>
+      <div class="byline"><img src="media/logo.png" alt=""><div><div class="who">The Untested Narrative</div><div class="label">${fmtDate(p.date)} · ${readTime(p)}</div></div></div>
+    </header>
+    ${hero}
+    ${quiz}
+    ${p.body.trim() ? `<div class="body">${citeHTML(p.body)}</div>` : ""}
+    <div class="ask"><span class="label gold">Join the discussion</span><p>${esc(p.ask)}</p></div>
+    ${sources}
+    <div class="tags">${p.tags.map(t => `<span>#${esc(t)}</span>`).join("")}</div>
+    <section class="comments" id="comments" aria-label="Comments"></section>
+    <nav class="pager" aria-label="More files">
+      ${older ? `<a href="#post-${older.slug}"><span class="label">← Previous file · ${pad(older.file)}</span><span class="t">${esc(older.title)}</span></a>` : "<span></span>"}
+      ${newer ? `<a href="#post-${newer.slug}"><span class="label">Next file · ${pad(newer.file)} →</span><span class="t">${esc(newer.title)}</span></a>` : "<span></span>"}
+    </nav>
+  </article>`;
+  view.querySelectorAll(".cite button").forEach(b => b.addEventListener("click", () => {
+    const li = document.getElementById("src-" + b.dataset.ref); if (!li) return;
+    li.scrollIntoView({ behavior: "smooth", block: "center" });
+    li.classList.add("flash"); setTimeout(() => li.classList.remove("flash"), 1600);
+  }));
+  if (p.quiz) {
+    const qz = document.getElementById("quiz");
+    qz.querySelectorAll(".opt").forEach(b => b.addEventListener("click", () => {
+      const pick = b.dataset.k, right = p.quiz.answer;
+      qz.querySelectorAll(".opt").forEach(o => {
+        o.disabled = true;
+        const opt = p.quiz.options.find(x => x[0] === o.dataset.k);
+        if (o.dataset.k === right) o.classList.add("right");
+        else if (o.dataset.k === pick) o.classList.add("wrong");
+        if (opt[2]) o.insertAdjacentHTML("beforeend", `<span class="why">${esc(opt[2])}</span>`);
+      });
+      document.getElementById("verdict").innerHTML = `<div class="verdict"><span class="label gold">${pick === right ? "Correct" : "Not quite"} · The answer is ${right}</span><h3>${pick === right ? "You spotted it." : "The answer is D."}</h3><p>${esc(p.quiz.explain)}</p></div>`;
+    }));
+  }
+  renderComments();
+}
+
+function renderSources() {
+  renderNav("sources");
+  const map = new Map();
+  ordered().forEach(p => p.sources.forEach(s => { if (!map.has(s.url)) map.set(s.url, { ...s, posts: [] }); map.get(s.url).posts.push(p); }));
+  const groups = ["Courts & case law", "Official guidance", "Research & commentary", "News & reporting"];
+  view.innerHTML = `
+  <div class="lib">
+    <header class="page-head"><span class="label gold">Reference</span><h1>Sources library</h1><p>Every judgment, guideline and study cited on this site, grouped by type, with links back to the files that rely on them.</p></header>
+    ${groups.map(g => { const items = [...map.values()].filter(s => s.kind === g); return items.length ? `<h2>${g}</h2><ul>${items.map(s => `<li><a class="src" href="${s.url}" target="_blank" rel="noopener">${esc(s.title)} ↗</a><span>${esc(s.name)}</span><span class="cited">Cited in ${s.posts.map(p => `<a href="#post-${p.slug}">File ${pad(p.file)}: ${esc(p.title)}</a>`).join("; ")}</span></li>`).join("")}</ul>` : ""; }).join("")}
+  </div>`;
+}
+
+function renderAbout() {
+  renderNav("about");
+  view.innerHTML = `
+  <div class="about">
+    <header class="page-head"><span class="label gold">About</span><h1>The Untested Narrative</h1><p>Evidence. Due process. Accountability.</p></header>
+    <p>Taking sexual violence seriously. Protecting the innocent. The Untested Narrative publishes frequent, evidence-led posts on wrongful convictions, disputed allegations and failures of justice.</p>
+    <p class="principle">Taking allegations seriously and protecting the innocent are not opposing goals; both require the exact same commitment to finding the truth.</p>
+    <p>Each post is filed under a number and a topic, and every factual claim points to its source: court judgments, official prosecution guidance, parliamentary evidence and peer-reviewed research. You can browse them all in the <a href="#sources">sources library</a>.</p>
+    <p>What you'll find here:</p>
+    <ul>
+      <li><strong>Long reads</strong> that work through a legal or psychological question in depth.</li>
+      <li><strong>Videos</strong>: short explainers and one-minute breakdowns.</li>
+      <li><strong>Quizzes</strong> that test how well you can spot the failures that lead to miscarriages of justice.</li>
+    </ul>
+    <p>Comments are open on every post. Disagreement is welcome; keep it civil and stick to the evidence.</p>
+    <div style="display:flex;flex-wrap:wrap;gap:0.75rem;margin-top:1.5rem"><a class="btn" href="${FB_PAGE}" target="_blank" rel="noopener">Follow on Facebook ↗</a><a class="btn ghost" href="https://www.youtube.com/watch?v=Gt9Tb6KX838" target="_blank" rel="noopener">Watch on YouTube ↗</a></div>
+  </div>`;
+}
+
+/* ---------- comments UI ---------- */
+function currentSlug() { const h = location.hash.slice(1); return h.startsWith("post-") ? h.slice(5) : null; }
+function initials(n) { return (n || "?").split(/\s+/).map(w => w[0]).join("").slice(0, 2).toUpperCase(); }
+function timeAgo(ts) {
+  const s = (Date.now() - ts) / 1000;
+  if (s < 60) return "just now"; if (s < 3600) return Math.floor(s / 60) + " min ago"; if (s < 86400) return Math.floor(s / 3600) + " h ago";
+  return new Date(ts).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric" });
+}
+let draft = "";
+function renderComments() {
+  const box = document.getElementById("comments"); const slug = currentSlug(); if (!box || !slug) return;
+  const mine = allComments.filter(c => c.post === slug).sort((a, b) => a.ts - b.ts);
+  const total = mine.length + (AUTHOR_REPLIES[slug] ? 1 : 0);
+  let composer = "";
+  if (cState === "off") composer = (window.claude && window.claude.use)
+    ? `<p class="note">Sign in to claude.ai to read and join the reader discussion. You can also comment on the original post on <a href="${FB_PAGE}" target="_blank" rel="noopener">Facebook</a>.</p>`
+    : `<p class="note">Join the conversation on our <a href="${FB_PAGE}" target="_blank" rel="noopener">Facebook page</a>.</p>`;
+  else if (cState === "error") composer = `<p class="note err">Comments can't be loaded right now. Refresh the page to try again.</p>`;
+  else composer = `<form class="composer" id="cform"><label class="label" for="ctext">Add a comment</label><textarea id="ctext" maxlength="2000" placeholder="Share your view. Please keep it civil and evidence-based."></textarea><div class="bar"><span class="note" id="cnote">${cState === "loading" ? "Loading comments…" : cState === "slow" ? "Comments are taking a while to load. They may be out of date." : "Comments are visible to everyone who can open this page."}</span><button class="btn" type="submit" id="csend">Post comment</button></div></form>`;
+  const authorItem = AUTHOR_REPLIES[slug] ? `<li class="cmt"><span class="avatar"><img src="media/logo.png" alt=""></span><div><div class="head"><span class="name">The Untested Narrative</span><span class="author-tag">Author</span><span class="label">Pinned</span></div><div class="text">${AUTHOR_REPLIES[slug]}</div></div></li>` : "";
+  const items = mine.map(c => {
+    const n = names[c.author] || "Reader";
+    const canDel = me && (c.author === me || isOwner);
+    return `<li class="cmt"><span class="avatar">${esc(initials(n))}</span><div><div class="head"><span class="name">${esc(n)}</span><span class="label">${esc(timeAgo(c.ts))}</span></div><p class="text">${esc(c.text)}</p>${canDel ? `<div class="act"><button class="linkbtn" data-del="${esc(c.id)}">Delete</button></div>` : ""}</div></li>`;
+  }).join("");
+  box.innerHTML = `<span class="label gold">Discussion</span><h2>${total} comment${total === 1 ? "" : "s"}</h2>${composer}<ul class="thread">${authorItem}${items}</ul>${!total && cState !== "off" && cState !== "error" ? `<p class="empty">No comments yet. Start the discussion.</p>` : ""}`;
+  const ta = document.getElementById("ctext");
+  if (ta) { ta.value = draft; ta.addEventListener("input", () => draft = ta.value); }
+  const form = document.getElementById("cform");
+  if (form) form.addEventListener("submit", async e => {
+    e.preventDefault();
+    const text = ta.value.trim(); const note = document.getElementById("cnote"); const send = document.getElementById("csend");
+    if (!text) { note.textContent = "Write something before posting."; note.className = "note err"; return; }
+    if (!db || !me) { note.textContent = "Comments aren't available to you yet. Sign in to claude.ai and reopen this page."; note.className = "note err"; return; }
+    send.disabled = true; note.textContent = "Posting…"; note.className = "note";
+    try {
+      await db.collection("comments").add({ post: slug, text: text.slice(0, 2000), author: me, ts: Date.now() });
+      draft = ""; ta.value = "";
+    } catch (err) {
+      note.className = "note err";
+      note.textContent = err && (err.code === "permission_denied" || err.code === "invalid_argument" || err.code === "not_granted")
+        ? "Your access lets you read comments but not post them. Ask the site owner for Contributor access."
+        : "Your comment didn't post. Check your connection and try again.";
+      send.disabled = false;
+    }
+  });
+  box.querySelectorAll("[data-del]").forEach(b => b.addEventListener("click", async () => {
+    if (b.dataset.confirm !== "1") { b.dataset.confirm = "1"; b.textContent = "Confirm delete"; setTimeout(() => { if (b.isConnected) { b.dataset.confirm = ""; b.textContent = "Delete"; } }, 4000); return; }
+    b.disabled = true;
+    try { await db.doc("comments/" + b.dataset.del).delete(); } catch (e) { b.textContent = "Couldn't delete"; }
+  }));
+}
+function refreshCounts() {
+  const c = counts();
+  document.querySelectorAll("[data-count]").forEach(el => { const n = c[el.dataset.count] || 0; el.textContent = n + " comment" + (n === 1 ? "" : "s"); });
+}
+async function resolveNames() {
+  if (!usr) return;
+  const ids = [...new Set(allComments.map(c => c.author).filter(Boolean))];
+  if (!ids.length) return;
+  try { const ps = await usr.profiles(ids); ids.forEach(id => { names[id] = (ps && ps[id] && ps[id].name) || "Reader"; }); } catch (e) {}
+}
+
+async function startComments() {
+  if (!window.claude || !window.claude.use) { cState = "off"; renderComments(); return; }
+  try { [db, usr] = await Promise.all([window.claude.use("db"), window.claude.use("user")]); } catch (e) { db = null; }
+  if (!db) { cState = "off"; renderComments(); return; }
+  if (usr) { try { me = await usr.id(); isOwner = !!(await usr.isOwner()); } catch (e) {} }
+  const timer = setTimeout(() => { if (cState === "loading") { cState = "slow"; renderComments(); } }, 10000);
+  db.collection("comments").orderBy("ts", "asc").limit(1000).onSnapshot(async snap => {
+    allComments = snap.docs.map(d => ({ id: d.id, ...d.data() })).filter(c => typeof c.text === "string" && typeof c.post === "string");
+    if (!snap.metadata.fromCache) { clearTimeout(timer); cState = "ready"; } else if (cState === "loading") cState = "ready";
+    await resolveNames();
+    const ta = document.getElementById("ctext");
+    if (!(ta && document.activeElement === ta)) renderComments(); else updateThreadOnly();
+    refreshCounts();
+  }, () => { clearTimeout(timer); cState = "error"; renderComments(); });
+}
+function updateThreadOnly() {
+  // Keep the textarea focused while new comments arrive: re-render, then restore focus and caret.
+  const ta = document.getElementById("ctext"); const pos = ta ? ta.selectionStart : 0;
+  renderComments();
+  const nta = document.getElementById("ctext"); if (nta) { nta.focus(); try { nta.setSelectionRange(pos, pos); } catch (e) {} }
+}
+
+/* ---------- router ---------- */
+function route() {
+  const h = location.hash.slice(1);
+  if (h.startsWith("post-")) renderPost(h.slice(5));
+  else if (h.startsWith("topic-")) renderTopic(h.slice(6));
+  else if (h === "sources") renderSources();
+  else if (h === "about") renderAbout();
+  else renderHome();
+  window.scrollTo(0, 0);
+}
+window.addEventListener("hashchange", route);
+route();
+startComments();
+</script>
